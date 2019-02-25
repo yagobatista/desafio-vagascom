@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './index.css';
 import keys from './config'
 import Axios from 'axios';
 
 class App extends Component {
     constructor(props) {
         super(props);
-        this.searchVideos =this.searchVideos.bind(this);
         this.state = {
             videos: [],
             nextPageToken: '',
             searchParam: '',
+            searchedValue: null,
         };
+        this.loadMoreVideos = this.loadMoreVideos.bind(this);
+        this.searchVideos = this.searchVideos.bind(this);
     }
     getData(data = null) {
         const defaultData = {
@@ -21,7 +22,7 @@ class App extends Component {
             order: 'rating',
             type: 'video',
             channelId: 'UCnLdHOuue5i1O7TsH6oh07w',
-            maxResults: 16,
+            maxResults: 12,
         };
         const params = { ...data, ...defaultData };
         const results = [];
@@ -33,18 +34,24 @@ class App extends Component {
             const { resultsPerPage, totalResults } = response.data.pageInfo;
             const videoIds = videos.map(video => video.id.videoId);
             const joinedIds = videoIds.join(',')
-            debugger;
             const videoParams = {
                 id: joinedIds,
-                part: 'statistics',
+                part: 'contentDetails,player,recordingDetails,statistics',
                 key: keys.youtube,
             }
             Axios.get(`https://www.googleapis.com/youtube/v3/videos/`, {
                 params: videoParams,
             }).then(videosDetails => {
-                const results = videos.map(video => {
-                    return { ...video.snippet, ...videosDetails.data.items.filter(detail => detail.id === video.id.videoId)[0].statistics }
+                let results = videos.map(video => {
+                    const detail = videosDetails.data.items.filter(detail => detail.id === video.id.videoId)[0];
+                    return {
+                        ...video.snippet,
+                        ...detail
+                    }
                 });
+                if (data && data.pageToken) {
+                    results = [...this.state.videos, ...results];
+                }
                 this.setState({ videos: results, nextPageToken });
             });
         });
@@ -53,31 +60,73 @@ class App extends Component {
         this.getData();
     }
 
-    searchVideos(event){
-        debugger;
-        this.setState({searchParam: event.target.value});
-        this.getData({q: this.state.searchParam})
+    loadMoreVideos() {
+        const { nextPageToken } = this.state;
+        this.getData({ pageToken: nextPageToken });
+    }
+
+    searchVideos(event) {
+        if (event.key === "Enter") {
+            this.getData({ q: this.state.searchParam })
+            this.setState({ searchedValue: this.state.searchParam });
+        }
     }
     render() {
-        const { videos } = this.state;
+        const { videos, searchedValue } = this.state;
         return (
-            <div className="row">
+            <div>
                 <header>
                     <nav>
                         <ul>
-                            <li><a href="#hey">Hey!</a></li>
-                            <li><a href="#cool">Cool</a></li>
-                            <li><a href="#truth">Truth</a></li>
-                            <li><input value={this.state.searchParam} onChange={this.searchVideos}/></li>
+                            <li className="logo">
+                                <span className="material-icons"> play_circle_outline</span><span>Fictícia vídeos</span>
+                            </li>
+                            <li>
+                                <input
+                                    value={this.state.searchParam}
+                                    onChange={event => { this.setState({ searchParam: event.target.value }) }}
+                                    onKeyPress={this.searchVideos}
+                                    placeholder="Pesquisa..."
+                                    className="pesquisa"
+                                />
+                            </li>
                         </ul>
                     </nav>
                 </header>
-                {videos.map(item =>
-                    <div className="item" key={item.id}>{item.title}
-                        <img src={item.thumbnails.medium.url} />
-                        view : {item.viewCount}
-                    </div>
-                )}
+                <div className="container flex">
+                    <h1 className="title">{searchedValue ? `Resultado para: "${searchedValue}"` : 'Todos os vídeos do Canal'}</h1>
+                </div>
+                <div className="container flex flex-wrap">
+                    {videos.map(item =>
+                        <div className="item">
+                            <div className="flex">
+                                <div className="img-container">
+                                    <img src={item.thumbnails.default.url} />
+                                </div>
+                                <div className="content">
+                                    <a className="title" href={'#' + item.id}>{item.title}</a>
+                                    <div>view: {item.viewCount}</div>
+                                    <div>{item.contentDetails.duration.replace('PT', '').replace('M', ':').replace('S', '')}</div>
+                                    <div id={item.id} className="modal-window">
+                                        <div className="modal">
+                                            <a href="#" title="Close" className="modal-close">Close</a>
+                                            <div className="video" dangerouslySetInnerHTML={{ __html: item.player.embedHtml }}></div>
+                                            <div className="title">{item.title}</div>
+                                            <div className="description">{item.description}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+                {
+                    this.state.nextPageToken &&
+                    <div className="button-container">
+                        <buton type="button" className="button-mais-videos" onClick={this.loadMoreVideos}>Carregar mais vídeos...</buton>
+                    </div> || ''
+                }
+
             </div>
         );
     }

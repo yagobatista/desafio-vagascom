@@ -1,12 +1,15 @@
+$roxo: #a8385c;
+
 body {
   margin: 0px;
 }
+
 
 nav {
   position: fixed;
   top: 0;
   width: 100%;
-  background-color: #a8385c;
+  background-color: $roxo;
   height: 60px;
 }
 
@@ -24,28 +27,34 @@ nav ul {
   list-style: none;
   display: flex;
   justify-content: space-between;
-}
-nav ul li {
-  padding: 4px;
-}
-nav ul li.logo {
-  color: #fff;
-}
-nav ul li.logo span {
-  vertical-align: middle;
-}
-nav ul li .pesquisa {
-  background: #a8385c;
-  border: 1px solid gray;
-  color: #fff;
-  border-radius: 4px;
-  padding: 4px 8px;
-}
-nav ul li .pesquisa:focus {
-  outline: none;
-}
-nav ul li .pesquisa::placeholder {
-  color: #fff;
+
+  li {
+    padding: 4px;
+
+    &.logo {
+      color: #fff;
+
+      span {
+        vertical-align: middle;
+      }
+    }
+
+    .pesquisa {
+      background: $roxo;
+      border: 1px solid gray;
+      color: #fff;
+      border-radius: 4px;
+      padding: 4px 8px;
+
+      &:focus {
+        outline: none;
+      }
+
+      &::placeholder {
+        color: #fff;
+      }
+    }
+  }
 }
 
 .container {
@@ -60,9 +69,10 @@ nav ul li .pesquisa::placeholder {
 
 .video {
   text-align: center;
-}
-.video iframe {
-  width: 100%;
+
+  iframe {
+    width: 100%;
+  }
 }
 
 .flex-wrap {
@@ -80,9 +90,10 @@ nav ul li .pesquisa::placeholder {
 
 .img-container {
   opacity: 0.5;
-}
-.img-container:hover {
-  opacity: 1;
+
+  &:hover {
+    opacity: 1;
+  }
 }
 
 /* .item img {
@@ -92,18 +103,19 @@ nav ul li .pesquisa::placeholder {
     width: 300%;
   } */
 .content {
-  padding-left: 4px;
+  padding-left: 4px
 }
 
 .button-container {
   text-align: center;
   margin: 40px 0px;
-}
-.button-container .button-mais-videos {
-  cursor: pointer;
-  background-color: #797979;
-  padding: 10px 40px;
-  color: #fff;
+
+  .button-mais-videos {
+    cursor: pointer;
+    background-color: #797979;
+    padding: 10px 40px;
+    color: #fff;
+  }
 }
 
 .modal-window {
@@ -119,29 +131,33 @@ nav ul li .pesquisa::placeholder {
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
   transition: all 0.3s;
-}
-.modal-window:target {
-  opacity: 1;
-  pointer-events: auto;
-}
-.modal-window .modal {
-  width: auto;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 2em;
-  background: #ffffff;
-  color: #333333;
-  box-shadow: 0px 2px 2px grey;
-}
-.modal-window header {
-  font-weight: bold;
-}
-.modal-window h1 {
-  font-size: 150%;
-  margin: 0 0 15px;
-  color: #333333;
+
+  &:target {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .modal {
+    width: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 2em;
+    background: #ffffff;
+    color: #333333;
+    box-shadow: 0px 2px 2px grey;
+  }
+
+  header {
+    font-weight: bold;
+  }
+
+  h1 {
+    font-size: 150%;
+    margin: 0 0 15px;
+    color: #333333;
+  }
 }
 
 .modal-close {
@@ -154,9 +170,8 @@ nav ul li .pesquisa::placeholder {
   top: 0;
   width: 70px;
   text-decoration: none;
-}
-.modal-close:hover {
-  color: #000;
-}
 
-/*# sourceMappingURL=index.css.map */
+  &:hover {
+    color: #000;
+  }
+}
