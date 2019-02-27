@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import './index.css';
 import keys from './config'
 import Axios from 'axios';
+import LinesEllipsis from 'react-lines-ellipsis'
+import responsiveHOC from 'react-lines-ellipsis/lib/responsiveHOC'
+
+const ResponsiveEllipsis = responsiveHOC()(LinesEllipsis)
 
 class App extends Component {
     constructor(props) {
@@ -18,37 +22,29 @@ class App extends Component {
     getData(data = null) {
         const defaultData = {
             key: keys.youtube,
-            part: 'snippet',
+            part: 'id',
             order: 'rating',
             type: 'video',
             channelId: 'UCnLdHOuue5i1O7TsH6oh07w',
             maxResults: 12,
         };
         const params = { ...data, ...defaultData };
-        const results = [];
         Axios.get(`https://www.googleapis.com/youtube/v3/search/`, {
             params,
         }).then(response => {
             const videos = response.data.items;
             const nextPageToken = response.data.nextPageToken;
-            const { resultsPerPage, totalResults } = response.data.pageInfo;
             const videoIds = videos.map(video => video.id.videoId);
             const joinedIds = videoIds.join(',')
             const videoParams = {
                 id: joinedIds,
-                part: 'contentDetails,player,recordingDetails,statistics',
+                part: 'snippet,contentDetails,player,recordingDetails,statistics',
                 key: keys.youtube,
             }
             Axios.get(`https://www.googleapis.com/youtube/v3/videos/`, {
                 params: videoParams,
             }).then(videosDetails => {
-                let results = videos.map(video => {
-                    const detail = videosDetails.data.items.filter(detail => detail.id === video.id.videoId)[0];
-                    return {
-                        ...video.snippet,
-                        ...detail
-                    }
-                });
+                let results = videos.map(video => videosDetails.data.items.filter(detail => detail.id === video.id.videoId)[0]); 
                 if (data && data.pageToken) {
                     results = [...this.state.videos, ...results];
                 }
@@ -94,25 +90,36 @@ class App extends Component {
                     </nav>
                 </header>
                 <div className="container flex">
-                    <h1 className="title">{searchedValue ? `Resultado para: "${searchedValue}"` : 'Todos os vídeos do Canal'}</h1>
+                    <h1 className="main-title">{searchedValue ? `Resultado para: "${searchedValue}"` : 'Todos os vídeos do Canal'}</h1>
                 </div>
                 <div className="container flex flex-wrap">
                     {videos.map(item =>
                         <div className="item">
                             <div className="flex">
                                 <div className="img-container">
-                                    <img src={item.thumbnails.default.url} />
+                                    <a href={'#' + item.id}>
+                                        <img src={item.snippet.thumbnails.default.url} alt="thumbnail do vídeo" />
+                                        <div className="time">{item.contentDetails.duration.replace('PT', '').replace('M', ':').replace('S', '')}</div>
+                                    </a>
                                 </div>
                                 <div className="content">
-                                    <a className="title" href={'#' + item.id}>{item.title}</a>
-                                    <div>view: {item.viewCount}</div>
-                                    <div>{item.contentDetails.duration.replace('PT', '').replace('M', ':').replace('S', '')}</div>
+                                    <a href={'#' + item.id}>
+                                        <ResponsiveEllipsis
+                                            text={item.snippet.title}
+                                            maxLine={2}
+                                            ellipsis='...'
+                                            trimRight
+                                            basedOn='letters'
+                                            className='title'
+                                        />
+                                    </a>
+                                    <div className="views"><span className="material-icons">visibility</span><span>{item.statistics.viewCount} views</span></div>
                                     <div id={item.id} className="modal-window">
                                         <div className="modal">
                                             <a href="#" title="Close" className="modal-close">Close</a>
                                             <div className="video" dangerouslySetInnerHTML={{ __html: item.player.embedHtml }}></div>
-                                            <div className="title">{item.title}</div>
-                                            <div className="description">{item.description}</div>
+                                            <div className="title">{item.snippet.title} <span className="material-icons">visibility</span><span>{item.statistics.viewCount} views</span></div>
+                                            <div className="description">{item.snippet.description}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -121,10 +128,10 @@ class App extends Component {
                     )}
                 </div>
                 {
-                    this.state.nextPageToken &&
-                    <div className="button-container">
-                        <buton type="button" className="button-mais-videos" onClick={this.loadMoreVideos}>Carregar mais vídeos...</buton>
-                    </div> || ''
+                    (this.state.nextPageToken &&
+                        <div className="button-container">
+                            <buton type="button" className="button-mais-videos" onClick={this.loadMoreVideos}>Carregar mais vídeos...</buton>
+                        </div>) || ''
                 }
 
             </div>
