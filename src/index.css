@@ -2,6 +2,11 @@ body {
   margin: 0px;
 }
 
+a {
+  text-decoration: none;
+  color: #fff;
+}
+
 nav {
   position: fixed;
   top: 0;
@@ -15,20 +20,17 @@ header {
   margin-bottom: 30px;
 }
 
-a {
-  text-decoration: none;
-  color: #fff;
-}
-
 nav ul {
-  list-style: none;
   display: flex;
+  list-style: none;
+  padding: 0px;
   justify-content: space-between;
 }
 nav ul li {
   padding: 4px;
 }
 nav ul li.logo {
+  margin-left: 10%;
   color: #fff;
 }
 nav ul li.logo span {
@@ -48,14 +50,29 @@ nav ul li .pesquisa::placeholder {
   color: #fff;
 }
 
-.container {
-  max-width: 80%;
-  margin: 0 auto;
-  justify-content: space-between;
+.main-title {
+  color: #a8385c;
 }
 
 .title {
   color: #a8385c;
+  font-size: 16px;
+}
+.title:hover {
+  color: #d8245e;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding-left: 4px;
+}
+.content .views {
+  color: #c7c7c7;
+}
+.content .views span {
+  vertical-align: middle;
 }
 
 .video {
@@ -65,34 +82,22 @@ nav ul li .pesquisa::placeholder {
   width: 100%;
 }
 
-.flex-wrap {
-  flex-wrap: wrap;
-}
-
-.flex {
-  display: flex;
-}
-
-.item {
-  width: 30%;
-  padding: 4px;
+.description {
+  max-height: 10em;
+  overflow-y: scroll;
 }
 
 .img-container {
   opacity: 0.5;
+  position: relative;
 }
 .img-container:hover {
   opacity: 1;
 }
-
-/* .item img {
-    width: 100%;
-  }
-  .img-container{
-    width: 300%;
-  } */
-.content {
-  padding-left: 4px;
+.img-container .time {
+  position: absolute;
+  bottom: 12px;
+  right: 0;
 }
 
 .button-container {
@@ -157,6 +162,43 @@ nav ul li .pesquisa::placeholder {
 }
 .modal-close:hover {
   color: #000;
+}
+
+.flex {
+  display: flex;
+}
+.flex.flex-wrap {
+  flex-wrap: wrap;
+}
+.flex .item {
+  width: 30%;
+}
+
+.container {
+  max-width: 80%;
+  margin: 0 auto;
+  justify-content: space-between;
+}
+
+@media (max-width: 600px) {
+  nav {
+    height: 90px;
+  }
+
+  nav ul {
+    flex-direction: column;
+    align-items: center;
+    margin-left: 0px;
+  }
+
+  .flex .item {
+    width: 100%;
+  }
+}
+@media (min-width: 600px) and (max-width: 1200px) {
+  .item {
+    width: 50%;
+  }
 }
 
 /*# sourceMappingURL=index.css.map */

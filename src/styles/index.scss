@@ -1,7 +1,13 @@
 $roxo: #a8385c;
+$gray: #c7c7c7;
 
 body {
   margin: 0px;
+}
+
+a {
+  text-decoration: none;
+  color: #fff;
 }
 
 
@@ -18,20 +24,18 @@ header {
   margin-bottom: 30px;
 }
 
-a {
-  text-decoration: none;
-  color: #fff;
-}
 
 nav ul {
-  list-style: none;
   display: flex;
+  list-style: none;
+  padding: 0px;
   justify-content: space-between;
 
   li {
     padding: 4px;
 
     &.logo {
+      margin-left: 10%;
       color: #fff;
 
       span {
@@ -57,14 +61,32 @@ nav ul {
   }
 }
 
-.container {
-  max-width: 80%;
-  margin: 0 auto;
-  justify-content: space-between;
+.main-title {
+  color: #a8385c;
 }
 
 .title {
   color: #a8385c;
+  font-size: 16px;
+
+  &:hover {
+    color: #d8245e;
+  }
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding-left: 4px;
+
+  .views {
+    color: $gray;
+
+    span {
+      vertical-align: middle;
+    }
+  }
 }
 
 .video {
@@ -73,38 +95,29 @@ nav ul {
   iframe {
     width: 100%;
   }
+
 }
 
-.flex-wrap {
-  flex-wrap: wrap;
-}
-
-.flex {
-  display: flex;
-}
-
-.item {
-  width: 30%;
-  padding: 4px;
+.description {
+  max-height: 10em;
+  overflow-y: scroll;
 }
 
 .img-container {
   opacity: 0.5;
+  position: relative;
 
   &:hover {
     opacity: 1;
   }
+
+  .time {
+    position: absolute;
+    bottom: 12px;
+    right: 0;
+  }
 }
 
-/* .item img {
-    width: 100%;
-  }
-  .img-container{
-    width: 300%;
-  } */
-.content {
-  padding-left: 4px
-}
 
 .button-container {
   text-align: center;
@@ -118,60 +131,6 @@ nav ul {
   }
 }
 
-.modal-window {
-  position: fixed;
-  background-color: rgba(255, 255, 255, 0.25);
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 999;
-  opacity: 0;
-  pointer-events: none;
-  -webkit-transition: all 0.3s;
-  -moz-transition: all 0.3s;
-  transition: all 0.3s;
-
-  &:target {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  .modal {
-    width: auto;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 2em;
-    background: #ffffff;
-    color: #333333;
-    box-shadow: 0px 2px 2px grey;
-  }
-
-  header {
-    font-weight: bold;
-  }
-
-  h1 {
-    font-size: 150%;
-    margin: 0 0 15px;
-    color: #333333;
-  }
-}
-
-.modal-close {
-  color: #aaa;
-  line-height: 50px;
-  font-size: 80%;
-  position: absolute;
-  right: 0;
-  text-align: center;
-  top: 0;
-  width: 70px;
-  text-decoration: none;
-
-  &:hover {
-    color: #000;
-  }
-}
+@import 'modal';
+@import 'flex';
+@import 'media';
