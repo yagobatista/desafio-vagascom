@@ -1,68 +1,87 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# DesafioVAGAS | Orientações Desenvolvedor(a) Front-end VAGAS.com
 
-## Available Scripts
+## O que esperamos de você
 
-In the project directory, you can run:
+Ao final do teste, esperamos receber um código que você acredite ser de qualidade e que possa
+ser executado e evoluído facilmente. A ​organização da solução e a ​apresentação visual estão
+entre os aspectos avaliados por nós, e claro, sua ​criatividade​ :)
 
-### `npm start`
+## Como será o teste
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. No final deste documento, você encontrará um ​desafio. Leia-o atentamente;
+2. Elabore a solução proposta em ​7 dias​ (hoje + 7 dias);
+3. Nos envie seu teste;
+Através de um repositório ​git privado no bitbucket. Basta nos enviar a URL do repositório
+e a permissão de acesso para o time: ​vagasfrontend
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+## Vamos começar? Mãos à obra
 
-### `npm test`
+​Briefing: ​Todos os anos, a equipe de marketing organiza um evento para os clientes da
+empresa Fictícia. O hotsite dessa edição já está pronto, mas é preciso criar uma página com os
+vídeos dos anos anteriores e essa demanda chegou para seu time.
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Os designers da área já fizeram um layout bonitão (link abaixo) e agora o job entrou para sua
+fila. O que você precisa fazer é desenvolver uma página implementando o layout proposto e
+usando a API V3 do Youtube para listar os vídeos de algum canal (à sua escolha).
 
-### `npm run build`
+Seu job será​ ​desenvolver uma aplicação que liste vídeos do Youtube, e incluímos ao lado um
+layout que você deverá estruturar. Utilize um pré-processador de CSS, um Framework JS de sua
+escolha e, caso queira, um Framework de CSS também.
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Ah! A aplicação deverá trabalhar com a ​API do YouTube​ para buscar os dados de algum canal, ser
+responsiva e ter funcionalidades como: capacidade de listar os vídeos do canal com miniaturas,
+busca e reprodução. Lembrando que o canal de base para o teste deve ser escolhido por você.
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+## Critérios de aceite
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+* Pré-processador de CSS (SASS, LESS,
+Stylus...);
+* Ser desenvolvido usando algum dos
+Frameworks ou Libraries a seguir:
+React.js​, ​Vue.js​, ​Ember.js​, ​Angular​ ou
+Javascript Vanilla​.
+* API do YouTube​;
+* Responsividade;
+* Listar, buscar e reproduzir os vídeos do
+canal. (Observe atentamente as imagens
+do Protótipo);
 
-### `npm run eject`
+## Será muito legal se encontrarmos também  
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+* Buildar os seus assets (Webpack, Gulp,
+Grunt...)
+* Testes automatizados
+* CSS modularizado
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+A descrição original em pdf e o mockups desse desafio também se encontram neste repositório
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Instruções para instalação
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+instruções para instalação do nvm, tome como referência a página
+<https://github.com/nvm-sh/nvm#install--update-script>
 
-## Learn More
+```shell
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Instalação da versão do node utilizada
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```shell
+nvm install 10.16.3
+```
 
-### Code Splitting
+## Instruções de execução
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+Crie um arquivo .env.development.local com uma variavel de ambiente chamada REACT_APP_YOUTUBE_KEY que contenha a sua chave para a api do google
 
-### Analyzing the Bundle Size
+```shell
+REACT_APP_YOUTUBE_KEY=<chave>
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+```shell
+npm install && npm run start
+```
 
-### Making a Progressive Web App
+Acessar <http://localhost:3000/> no browser
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+O desafio a seguir encontra-se incompleto

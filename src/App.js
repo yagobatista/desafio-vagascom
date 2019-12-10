@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './index.css';
-import keys from './config'
 import Axios from 'axios';
 import LinesEllipsis from 'react-lines-ellipsis'
 import responsiveHOC from 'react-lines-ellipsis/lib/responsiveHOC'
@@ -21,7 +20,7 @@ class App extends Component {
     }
     getData(data = null) {
         const defaultData = {
-            key: keys.youtube,
+            key: process.env.REACT_APP_YOUTUBE_KEY,
             part: 'id',
             order: 'rating',
             type: 'video',
@@ -37,10 +36,10 @@ class App extends Component {
             const videoIds = videos.map(video => video.id.videoId);
             const joinedIds = videoIds.join(',')
             const videoParams = {
-                id: joinedIds,
-                part: 'snippet,contentDetails,player,recordingDetails,statistics',
-                key: keys.youtube,
-            }
+              id: joinedIds,
+              part: "snippet,contentDetails,player,recordingDetails,statistics",
+              key: process.env.REACT_APP_YOUTUBE_KEY,
+            };
             Axios.get(`https://www.googleapis.com/youtube/v3/videos/`, {
                 params: videoParams,
             }).then(videosDetails => {
